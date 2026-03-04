@@ -24,3 +24,10 @@ header {
     }
 
 }
+
+footer {
+    background: base.$color-secondary-dark;
+    min-height: 250px;
+    color: base.$color-font-light;
+    padding: 1rem 0;
+}
