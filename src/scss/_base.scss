@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+
+// Färgpalett 
+$color-background: #FFFDF7;
+$color-background-light: #FFFFFF;
+
+$color-font: #2B2B2B;
+$color-font-light: #FFFFFF;
+
+$color-primary:#A54657;
+$color-secondary:#D27F90;
+
+$color-error: #F26157;
+$color-border: #E6E0DA;
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: "Poppins", sans-serif;
+    line-height: 1.5;
+
+    background: $color-background;
+    color: $color-font;
+}
