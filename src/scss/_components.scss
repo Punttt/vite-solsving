@@ -21,6 +21,6 @@
 .card {
     background: base.$color-background-light;
     border: 1px solid base.$color-border;
-    border-radius: 8px;
+    border-radius: base.$size-border;
     padding: 1rem;
 }
