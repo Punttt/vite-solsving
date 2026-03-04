@@ -8,6 +8,7 @@
     text-align: center;
     font-family: inherit;
     cursor: pointer;
+    font-size: 1rem;
 
     background-color: base.$color-primary;
     color: base.$color-font-light;
@@ -18,6 +19,26 @@
 }
 
 // Forms
+input,
+select,
+textarea {
+    font: inherit;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: none;
+}
+
+input{
+    border: 1px solid base.$color-border;
+}
+
+// Search-forms
+.search-form{
+    display: grid;
+    grid-template-columns: 4fr 1fr;
+    width: 100%;
+    gap: 1rem;
+}
 
 // Cards 
 .card {
