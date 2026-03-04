@@ -4,4 +4,12 @@
 .container {
     max-width: 880px;
     margin: 0 auto;
+    padding: 0 1rem;
+}
+
+// Header
+header {
+    height: 80px;
+    background: base.$color-primary;
+    color: base.$color-font-light;
 }
