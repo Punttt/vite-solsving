@@ -9,7 +9,18 @@
 
 // Header
 header {
-    height: 80px;
+    height: 70px;
     background: base.$color-primary;
     color: base.$color-font-light;
+
+    .logo {
+        display: block;
+        height: 65px;
+        width: auto;
+    }
+    img {
+        display: block;
+        max-width: 100%;
+    }
+
 }
