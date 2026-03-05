@@ -51,3 +51,5 @@ async function searchLocation(query) {
         return null;
     }
 }
+
+

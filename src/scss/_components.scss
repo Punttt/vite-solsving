@@ -50,6 +50,15 @@ input{
     margin-bottom: 2rem;
 }
 
+// Weather cards
+.day-card{
+    background: base.$color-background;
+    border-radius: base.$size-border;
+    border: 1px solid base.$color-border;
+    height: 175px;
+    width: auto;
+}
+
 // Cards - courser
 .course {
     display: grid;
