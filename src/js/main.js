@@ -1,5 +1,3 @@
-let lat;
-let lng;
 
 
 /**
@@ -15,8 +13,9 @@ document.addEventListener("DOMContentLoaded", ()=>{
         const query = input.value;
         console.log(query);
 
-        // Anropar funktion för att hämta koordinater för plats
-        await searchLocation(query);
+        // Anropar funktion för att hämta koordinater för plats placerar i coords.lat / coords.lng
+        const coords = await searchLocation(query);
+        console.table(coords);
     })
 })
 
@@ -26,7 +25,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
  * 
  * @async
  * @param {string} query - Platsen som användaren söker efter.
- * @returns {Promise<void>}
+ * @returns {Promise<{lat: number, lng: number} | null>}
+ * Returnerar ett objekt med latitud och longitud, eller null om platsen inte hittas
  */
 async function searchLocation(query) {
     const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(query)}&key=AIzaSyC4Gx-KoIj3bIpmEd9Q9AkETl8ZJxRVzAI`;
@@ -38,17 +38,16 @@ async function searchLocation(query) {
 
         if(data.status != "OK"){
             console.error(data.error_message);
-            return;
+            return null;
         }
 
-        lat = data.results[0].geometry.location.lat;
-        lng = data.results[0].geometry.location.lng;
+        const lat = data.results[0].geometry.location.lat;
+        const lng = data.results[0].geometry.location.lng;
 
-        // Skriver ut för test
-        console.log(`Lat: ${lat}`);
-        console.log(`Lng: ${lng}`);
+        return {lat , lng};
 
     }catch (error){
         console.error(error);
+        return null;
     }
 }
