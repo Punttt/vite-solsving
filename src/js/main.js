@@ -16,6 +16,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
         // Anropar funktion för att hämta koordinater för plats placerar i coords.lat / coords.lng
         const coords = await searchLocation(query);
         console.table(coords);
+
+        searchWeather(coords);
     })
 })
 
@@ -45,6 +47,22 @@ async function searchLocation(query) {
         const lng = data.results[0].geometry.location.lng;
 
         return {lat , lng};
+
+    }catch (error){
+        console.error(error);
+        return null;
+    }
+}
+
+async function searchWeather(coords) {
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${coords.lat}&longitude=${coords.lng}&daily=weathercode,temperature_2m_max,temperature_2m_min&timezone=auto`;
+    let data;
+
+    try{
+        const response = await fetch(url);
+        data = await response.json();
+
+        // Koden / funktionen här
 
     }catch (error){
         console.error(error);
