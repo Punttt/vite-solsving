@@ -17,7 +17,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
         const coords = await searchLocation(query);
         console.table(coords);
 
-        searchWeather(coords);
+        const forecast = await searchWeather(coords.lat, coords.lng);
+        console.table(forecast);
     })
 })
 
@@ -54,8 +55,11 @@ async function searchLocation(query) {
     }
 }
 
-async function searchWeather(coords) {
-    const url = `https://api.open-meteo.com/v1/forecast?latitude=${coords.lat}&longitude=${coords.lng}&daily=weathercode,temperature_2m_max,temperature_2m_min&timezone=auto`;
+
+// funktionen för att hämta vädret
+// behöver noteras
+async function searchWeather(lat, lng) {
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}&daily=weathercode,temperature_2m_max,temperature_2m_min&timezone=auto`;
     let data;
 
     try{
@@ -63,6 +67,7 @@ async function searchWeather(coords) {
         data = await response.json();
 
         // Koden / funktionen här
+        return data.daily;
 
     }catch (error){
         console.error(error);
