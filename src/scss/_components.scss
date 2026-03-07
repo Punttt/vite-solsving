@@ -64,7 +64,13 @@ input{
     justify-content: space-between;
 
     h3 {
-        font-weight: 600;
+        font-weight: 500;
+    }
+    .deg-max{
+        color: base.$color-font;
+    }
+    .deg-min{
+        color: base.$color-font-grey;
     }
 }
 
