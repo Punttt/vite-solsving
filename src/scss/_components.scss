@@ -57,7 +57,15 @@ input{
     border: 1px solid base.$color-border;
     height: 175px;
     width: auto;
-    text-align: center;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+
+    h3 {
+        font-weight: 600;
+    }
 }
 
 // Cards - courser

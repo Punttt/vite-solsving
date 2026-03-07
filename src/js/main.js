@@ -19,6 +19,9 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
         const forecast = await searchWeather(coords.lat, coords.lng);
         console.table(forecast);
+
+        // Render weather
+        renderWeather();
     })
 })
 
@@ -76,3 +79,7 @@ async function searchWeather(lat, lng) {
 }
 
 
+// renderar weather
+function renderWeather() {
+    const forecastEl = document.getElementById("forecast");
+}
