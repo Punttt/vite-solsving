@@ -118,10 +118,18 @@ function renderWeather(forecast) {
     forecastEl.innerHTML = "";
     
     console.table(forecast);
-    forecastEl.innerHTML = `
-        <div class = "day-card">
-            <h3></h3>
-            <p><span class="deg-max">20&deg;</span> <span class="deg-min">-2&deg;</span></p>
-        </div>    
-    `;
+    console.log(forecast.time[0]);
+
+    for(let i = 0; i < 7; i++){
+
+        
+        forecastEl.innerHTML += `
+           <div class="day-card">
+                <h3>${forecast.time[i]}</h3>
+                ${forecast.weathercode[i]}
+                <p><span class="deg-max">${forecast.temperature_2m_max[i]}&deg;</span> <span class="deg-min">${forecast.temperature_2m_min[i]}&deg;</span></p>
+            </div>     
+        `;
+    }
+    
 }
