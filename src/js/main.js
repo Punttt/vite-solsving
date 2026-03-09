@@ -17,11 +17,11 @@ document.addEventListener("DOMContentLoaded", ()=>{
         const coords = await searchLocation(query);
         console.table(coords);
 
+        // Anropar funktion för att få uppgifter för väderprognosen
         const forecast = await searchWeather(coords.lat, coords.lng);
-        console.table(forecast);
 
         // Render weather
-        renderWeather();
+        renderWeather(forecast);
     })
 })
 
@@ -79,7 +79,20 @@ async function searchWeather(lat, lng) {
 
         // konvertera - weathercode till kod för ikon
         daily.weathercode = daily.weathercode.map(code =>{
-            
+            if( code === 0 ) return `<i class="fa-solid fa-sun"></i>`; // Soligt
+            if( code === 1 || code === 2 || code === 3 ) return `<i class="fa-solid fa-cloud-sun"></i>`; // molnigt / soligt
+            if( code === 45 || code === 48 ) return `<i class="fa-solid fa-cloud"></i>`; // Molnigt
+            if( 
+                code === 51 || code === 53 || code === 55 || code === 56 || code === 57 ||
+                code === 61 || code === 63 || code === 65 || code === 66 || code === 67 ||
+                code === 80 || code === 81 || code === 82
+            ) return `<i class="fa-solid fa-cloud-showers-heavy"></i>`; // regnigt
+            if( 
+                code === 71 || code === 73 || code === 75 || code === 77 || code === 85 ||
+                code === 86
+            ) return `<i class="fa-solid fa-snowflake"></i>`; // Snö
+            if( code === 95 || code === 96 || code === 99 ) return `<i class="fa-solid fa-bolt-lightning"></i>`; // Blixtar
+
         })
 
         return data.daily;
@@ -92,6 +105,23 @@ async function searchWeather(lat, lng) {
 
 
 // renderar weather
-function renderWeather() {
+
+/**
+    <div class="day-card">
+        <h3>torsdag</h3>
+        <i class="fa-solid fa-sun"></i>
+        <p><span class="deg-max">20&deg;</span> <span class="deg-min">-2&deg;</span></p>
+    </div>
+ */
+function renderWeather(forecast) {
     const forecastEl = document.getElementById("forecast");
+    forecastEl.innerHTML = "";
+    
+    console.table(forecast);
+    forecastEl.innerHTML = `
+        <div class = "day-card">
+            <h3></h3>
+            <p><span class="deg-max">20&deg;</span> <span class="deg-min">-2&deg;</span></p>
+        </div>    
+    `;
 }
