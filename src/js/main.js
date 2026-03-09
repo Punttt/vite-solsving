@@ -77,6 +77,11 @@ async function searchWeather(lat, lng) {
             return date.toLocaleDateString("sv-SE", { weekday: "long" });
         })
 
+        // konvertera - weathercode till kod för ikon
+        daily.weathercode = daily.weathercode.map(code =>{
+            
+        })
+
         return data.daily;
 
     }catch (error){
