@@ -69,7 +69,14 @@ async function searchWeather(lat, lng) {
         const response = await fetch(url);
         data = await response.json();
 
-        // Koden / funktionen här
+        const daily = data.daily;
+
+        // konvertera - datumstamp till dagnamn
+        daily.time = daily.time.map(dateString =>{
+            const date = new Date(dateString);
+            return date.toLocaleDateString("sv-SE", { weekday: "long" });
+        })
+
         return data.daily;
 
     }catch (error){
