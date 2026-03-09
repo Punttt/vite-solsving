@@ -55,10 +55,10 @@ input{
     background: base.$color-background;
     border-radius: base.$size-border;
     border: 1px solid base.$color-border;
-    height: 175px;
     width: auto;
 
     display: flex;
+    gap: 1rem;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
