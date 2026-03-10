@@ -111,12 +111,12 @@ async function searchWeather(lat, lng) {
 // funktion för att söka golfklubbar
 async function searchGolfClubs(lat, lng) {
     const apiKey = "4df938918ee847b3a2727c8763b763ba";
-    const url = `https://api.geoapify.com/v2/places?categories=entertainment.golf&filter=circle:${lng},${lat},30000&limit=20&apiKey=${apiKey}`;
+    const url = `https://api.geoapify.com/v2/places?categories=sport.golf&filter=circle:${lng},${lat},10000&apiKey=${apiKey}`
 
     const response = await fetch(url);
     const data = await response.json();
 
-    console.table(data);
+    console.table(data.features);
 }
 
 
