@@ -20,11 +20,13 @@ document.addEventListener("DOMContentLoaded", ()=>{
         // Anropar funktion för att få uppgifter för väderprognosen
         const forecast = await searchWeather(coords.lat, coords.lng);
 
-        // Anropar funktion för att få uppgifter om golfbanor
-        //const clubs = await searchGolfClubs(coords.lat, coords.lng);    
-
         // Render weather
         renderWeather(forecast);
+
+        // Anropar funktion för att få uppgifter om golfbanor
+        await searchGolfClubs(coords.lat, coords.lng);    
+
+        
     })
 })
 
@@ -108,8 +110,8 @@ async function searchWeather(lat, lng) {
 
 // funktion för att söka golfklubbar
 async function searchGolfClubs(lat, lng) {
-    const apiKey = "AIzaSyC4Gx-KoIj3bIpmEd9Q9AkETl8ZJxRVzAI";
-    const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lng}&radius=30000&type=golf_course&key=${apiKey}`;
+    const apiKey = "4df938918ee847b3a2727c8763b763ba";
+    const url = `https://api.geoapify.com/v2/places?categories=entertainment.golf&filter=circle:${lng},${lat},30000&limit=20&apiKey=${apiKey}`;
 
     const response = await fetch(url);
     const data = await response.json();
