@@ -25,6 +25,10 @@ header {
 
 }
 
+main {
+    min-height: calc(100dvh - 315px);
+}
+
 // Weathercard
 .card--weather{
     display: grid;
@@ -36,6 +40,13 @@ header {
 
 .card--weather.hidden{
     display: none;
+}
+
+// Section courses
+.courses{
+    h2{
+        margin-bottom: 1rem;
+    }
 }
 
 // Footer

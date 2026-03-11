@@ -163,5 +163,8 @@ function renderWeather(forecast) {
 // render clubs
 
 function renderClubs(clubs){
+    const coursesEl = document.getElementById("course-box");
+    coursesEl.innerHTML = "";
+    
     console.log(clubs);
 }
