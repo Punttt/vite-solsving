@@ -34,6 +34,10 @@ header {
     overflow-y: hidden;
 }
 
+.card--weather.hidden{
+    display: none;
+}
+
 // Footer
 footer {
     background: base.$color-secondary-dark;

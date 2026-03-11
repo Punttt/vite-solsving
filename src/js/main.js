@@ -141,6 +141,7 @@ async function searchGolfClubs(lat, lng) {
 function renderWeather(forecast) {
     const forecastEl = document.getElementById("forecast");
     forecastEl.innerHTML = "";
+    forecastEl.classList.remove("hidden");
     
     console.table(forecast);
     console.log(forecast.time[0]);
