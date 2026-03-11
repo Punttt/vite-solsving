@@ -11,11 +11,9 @@ document.addEventListener("DOMContentLoaded", ()=>{
         e.preventDefault();
 
         const query = input.value;
-        console.log(query);
 
         // Anropar funktion för att hämta koordinater för plats placerar i coords.lat / coords.lng
         const coords = await searchLocation(query);
-        console.table(coords);
 
         // Anropar funktion för att få uppgifter för väderprognosen
         const forecast = await searchWeather(coords.lat, coords.lng);
@@ -26,6 +24,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
         // Anropar funktion för att få uppgifter om golfbanor
         const clubs = await searchGolfClubs(coords.lat, coords.lng);    
 
+        // Renderar klubbarna
         renderClubs(clubs);
     })
 })
@@ -134,9 +133,6 @@ function renderWeather(forecast) {
     const forecastEl = document.getElementById("forecast");
     forecastEl.innerHTML = "";
     forecastEl.classList.remove("hidden");
-    
-    console.table(forecast);
-    console.log(forecast.time[0]);
 
     for(let i = 0; i < 7; i++){
 
@@ -157,7 +153,6 @@ function renderClubs(clubs){
     const coursesEl = document.getElementById("course-box");
     coursesEl.innerHTML = "";
 
-    console.log(clubs);
     clubs.forEach(club =>{
         const mapUrl = `https://www.google.com/maps/search/?api=1&query=${club.lat},${club.lon}`;
 
