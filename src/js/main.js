@@ -24,9 +24,9 @@ document.addEventListener("DOMContentLoaded", ()=>{
         renderWeather(forecast);
 
         // Anropar funktion för att få uppgifter om golfbanor
-        await searchGolfClubs(coords.lat, coords.lng);    
+        const clubs = await searchGolfClubs(coords.lat, coords.lng);    
 
-        
+        renderClubs(clubs);
     })
 })
 
@@ -110,13 +110,22 @@ async function searchWeather(lat, lng) {
 
 // funktion för att söka golfklubbar
 async function searchGolfClubs(lat, lng) {
+
     const apiKey = "4df938918ee847b3a2727c8763b763ba";
-    const url = `https://api.geoapify.com/v2/places?categories=sport.golf&filter=circle:${lng},${lat},10000&apiKey=${apiKey}`
+
+    const url = `https://api.geoapify.com/v2/places?categories=entertainment.miniature_golf&filter=circle:${lng},${lat},10000&limit=10&apiKey=${apiKey}`;
 
     const response = await fetch(url);
     const data = await response.json();
 
-    console.table(data.features);
+    const results = data.features.map(f => ({
+        name: f.properties.name,
+        address: f.properties.formatted,
+        lat: f.properties.lat,
+        lon: f.properties.lon
+    }));
+
+    return results;
 }
 
 
@@ -148,4 +157,10 @@ function renderWeather(forecast) {
         `;
     }
     
+}
+
+// render clubs
+
+function renderClubs(clubs){
+    console.log(clubs);
 }
