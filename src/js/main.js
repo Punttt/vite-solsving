@@ -130,14 +130,6 @@ async function searchGolfClubs(lat, lng) {
 
 
 // renderar weather
-
-/**
-    <div class="day-card">
-        <h3>torsdag</h3>
-        <i class="fa-solid fa-sun"></i>
-        <p><span class="deg-max">20&deg;</span> <span class="deg-min">-2&deg;</span></p>
-    </div>
- */
 function renderWeather(forecast) {
     const forecastEl = document.getElementById("forecast");
     forecastEl.innerHTML = "";
@@ -161,10 +153,22 @@ function renderWeather(forecast) {
 }
 
 // render clubs
-
 function renderClubs(clubs){
     const coursesEl = document.getElementById("course-box");
     coursesEl.innerHTML = "";
-    
+
     console.log(clubs);
+    clubs.forEach(club =>{
+        const mapUrl = `https://www.google.com/maps/search/?api=1&query=${club.lat},${club.lon}`;
+
+        coursesEl.innerHTML += `
+            <div class="card course">
+                <div class="course_info">
+                    <h3>${club.name}</h3>
+                    <p>${club.address}</p>
+                </div>
+                <a href="${mapUrl}" target="_blank" class="btn">Hitta hit</a>
+            </div>  
+        `;
+    })
 }
