@@ -122,12 +122,33 @@ async function searchGolfClubs(lat, lng) {
     const response = await fetch(url);
     const data = await response.json();
 
-    const results = data.features.map(f => ({
-        name: f.properties.name,
-        address: f.properties.formatted,
-        lat: f.properties.lat,
-        lon: f.properties.lon
-    }));
+    console.log(url);
+
+    const results = data.features.map(f => {
+
+        let name;
+
+        // 1. Om riktigt namn finns
+        if (f.properties.name) {
+            name = f.properties.name;
+
+        // 2. Om namn saknas men suburb finns
+        } else if (f.properties.suburb) {
+            name = `${f.properties.suburb} - Bangolf`;
+
+        // 3. fallback om inget hittas
+        } else {
+            name = "Okänt namn - Bangolf";
+        }
+
+        return {
+            name: name,
+            address: f.properties.formatted,
+            lat: f.properties.lat,
+            lon: f.properties.lon
+        };
+    });
+
 
     return results;
 }
