@@ -1,4 +1,4 @@
-
+"use strict"
 
 /**
  * Inväntar DOM att bli färdigladdat
@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
         // Gömma introrutan
         document.querySelector(".intro").classList.add("hidden");
+        document.querySelector("#loader").classList.remove("hidden");
 
         const query = input.value;
 
@@ -135,7 +136,7 @@ async function searchGolfClubs(lat, lng) {
 function renderWeather(forecast) {
     const forecastEl = document.getElementById("forecast");
     forecastEl.innerHTML = "";
-    forecastEl.classList.remove("hidden");
+    //forecastEl.classList.remove("hidden");
 
     for(let i = 0; i < 7; i++){
 
@@ -155,6 +156,7 @@ function renderWeather(forecast) {
 function renderClubs(clubs){
     const coursesEl = document.getElementById("course-box");
     coursesEl.innerHTML = "";
+    //coursesEl.classList.remove("hidden");
 
     clubs.forEach(club =>{
         const mapUrl = `https://www.google.com/maps/search/?api=1&query=${club.lat},${club.lon}`;

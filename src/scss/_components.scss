@@ -91,6 +91,13 @@ input{
     animation: spin 0.8s infinite linear;
 }
 
+//Fade in effekt
+.fade-in{
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fadeIn 0.4s ease forwards;
+}
+
 // Cards - courser
 .course {
     display: flex;
