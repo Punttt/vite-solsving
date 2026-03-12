@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
     form.addEventListener("submit",async (e)=>{
         e.preventDefault();
+        document.querySelector(".intro").classList.add("hidden");
 
         const query = input.value;
 

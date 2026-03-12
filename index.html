@@ -11,25 +11,31 @@
   <body>
     <header>
       <div class="container">
-        <img src="/images/logotypes/logotype.png" class="logo" alt="Solsving">
+        <a href="/">
+          <h1><img src="/images/logotypes/logotype.png" class="logo" alt="Solsving"></h1>
+        </a>
       </div>
     </header>
     <main>
       <div class="container">
+        <div class="intro">
+          <div class="card">
+            <p class="intro-text">
+              Sök efter en stad för att se väder och äventyrsgolf nära dig.
+            </p>
+          </div>
+        </div>
+
         <form id="locationForm" class="search-form">
           <input type="text" id="locationInput" placeholder="Vart vill du spela?" required>
           <button type="submit" class="btn">Sök</button>
         </form>
 
         <!-- Rendering av väderprognosen -->
-        <div class="card card--weather hidden" id="forecast"></div>
+        <section class="card card--weather hidden" id="forecast"></section>
 
-        <section class="courses">
-          <h2>Golfbanor i närheten:</h2>
-          
-          <!-- Rendering av golfställen-->
-          <div class="courses-wrapper" id="course-box"></div>
-        </section>
+        <!-- Rendering av klubbar-->
+        <section class="courses-wrapper" id="course-box"></section>
       </div>
     </main>
     <footer>
