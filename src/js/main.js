@@ -30,6 +30,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
         // Renderar klubbarna
         renderClubs(clubs);
+        document.querySelector("#loader").classList.add("hidden");
     })
 })
 
@@ -136,7 +137,11 @@ async function searchGolfClubs(lat, lng) {
 function renderWeather(forecast) {
     const forecastEl = document.getElementById("forecast");
     forecastEl.innerHTML = "";
-    //forecastEl.classList.remove("hidden");
+
+    // Animation för render (fade-in)
+    forecastEl.classList.remove("fade-in");
+    void forecastEl.offsetWidth;
+    forecastEl.classList.add("fade-in");
 
     for(let i = 0; i < 7; i++){
 
@@ -156,7 +161,11 @@ function renderWeather(forecast) {
 function renderClubs(clubs){
     const coursesEl = document.getElementById("course-box");
     coursesEl.innerHTML = "";
-    //coursesEl.classList.remove("hidden");
+
+    // Animation för render (fade-in)
+    coursesEl.classList.remove("fade-in");
+    void coursesEl.offsetWidth;
+    coursesEl.classList.add("fade-in");
 
     clubs.forEach(club =>{
         const mapUrl = `https://www.google.com/maps/search/?api=1&query=${club.lat},${club.lon}`;
