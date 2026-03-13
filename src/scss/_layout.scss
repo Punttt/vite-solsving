@@ -12,6 +12,7 @@ header {
     height: 70px;
     background: base.$color-primary;
     color: base.$color-font-light;
+    padding: 0.5rem 0 ;
 
     .container{
         display: flex;
@@ -75,6 +76,7 @@ footer {
         align-items: center;
         justify-content: space-between;
         min-height: 250px;
+        gap: 1rem;
     }
 
     .icons {
@@ -97,6 +99,10 @@ footer {
     p{
         font-size: 0.9rem;
         color: base.$color-font-grey;
+    }
+
+    img{
+        max-width: 60vw;
     }
 }
 
