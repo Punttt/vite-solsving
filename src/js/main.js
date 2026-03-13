@@ -1,7 +1,13 @@
 "use strict"
 
 /**
- * Inväntar DOM att bli färdigladdat
+ * Startar applikationen när DOM:en är färdigladdad
+ * 
+ * Sätter upp en eventlyssnare för sökfurmuläret, hanterar användarens sökfråga,
+ * hämtar koordinater, väderdata och minigolfbanor.
+ * Renderar sedan ut allt resultat.
+ * 
+ * @event DOMContentLoaded
  */
 document.addEventListener("DOMContentLoaded", ()=>{
     const form = document.getElementById("locationForm");
@@ -68,8 +74,16 @@ async function searchLocation(query) {
 }
 
 
-// funktionen för att hämta vädret
-// behöver noteras
+/**
+ * Skickar in koordinater och hämtar 7 dagarsprognos via API open mateo
+ * 
+ * @async
+ * @function
+ * @param {number} lat 
+ * @param {number} lng 
+ * @returns {Promise<{time: string[], weathercode: string[], temperature_2m_max: number[], temperature_2m_min: number[]}> | null}
+ * Returnerar ett objekt med väderdata för 7 dagar, eller null om API-anropet misslyckas
+ */
 async function searchWeather(lat, lng) {
     const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}&daily=weathercode,temperature_2m_max,temperature_2m_min&timezone=auto`;
     let data;
@@ -112,7 +126,16 @@ async function searchWeather(lat, lng) {
     }
 }
 
-// funktion för att söka golfklubbar
+/**
+ * Hämtar minigolfbanor inom en radie 10km från angivning koordinater från Geoapify Places API
+ * 
+ * @async
+ * @function
+ * @param {number} lat 
+ * @param {number} lng 
+ * @returns {Promise<Array<{name: string, address: string, lat: number, lon: number}>>}
+ * Returnerar en array med objekt som presenterar golfbanor med Namn, adress och koordinater
+ */
 async function searchGolfClubs(lat, lng) {
 
     const apiKey = "4df938918ee847b3a2727c8763b763ba";
@@ -154,7 +177,17 @@ async function searchGolfClubs(lat, lng) {
 }
 
 
-// renderar weather
+/**
+ * Renderar 7-dagars prognos i DOM:en baserat på ett forecast-objekt.
+ * 
+ * Funktionen tömmer befintligt innehåll och triggar en fade effekt (animation) och
+ * genererar därefter ny data.
+ * 
+ * @function
+ * @param {{time: string[], weathercode: string[], temperature_2m_max: number[], temperature_2m_min: number[]}} forecast 
+ * Ett objekt som innehåller väderdata för 7 dagar
+ * @returns {void}
+ */
 function renderWeather(forecast) {
     const forecastEl = document.getElementById("forecast");
     forecastEl.innerHTML = "";
@@ -178,7 +211,18 @@ function renderWeather(forecast) {
     
 }
 
-// render clubs
+/**
+ * Renderar en lista av minigoldbanor i DOM:en baserat på Clubs-objekt
+ * 
+ * Funktionen tömmer befintligt innehåll och triggar en fade effekt (animation) och
+ * genererar därefter ett kort för varje minigolfklubb som presenteras med:
+ * Namn, adress och en knapp som leder till Google maps baserat på klubbens koordinater.
+ * 
+ * @function
+ * @param {Array<{name: string, address: string, lat: number, lon: number}>} clubs
+ * En arrat med ovjekt som representerar minigolfklubbar
+ * @returns {void}
+ */
 function renderClubs(clubs){
     const coursesEl = document.getElementById("course-box");
     coursesEl.innerHTML = "";

@@ -64,12 +64,40 @@ main {
 
 // Footer
 footer {
-    display: flex;
-    align-items: end;
     background: base.$color-secondary-dark;
-    min-height: 250px;
+    
     color: base.$color-font-light;
-    padding: 1rem 0;
+    padding: 2rem 0;
+
+    .container{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 250px;
+    }
+
+    .icons {
+        display: flex;
+        gap: 1rem;
+        i{
+            font-size: 32px;
+            padding: 0.75rem;
+            border-radius: 50%;
+            background: base.$color-background;
+            color: base.$color-secondary-dark;
+            cursor: pointer;
+        }
+        i:hover{
+            background: base.$color-background-light;
+            color: base.$color-secondary;
+        }
+    }
+
+    p{
+        font-size: 0.9rem;
+        color: base.$color-font-grey;
+    }
 }
 
 @media (max-width: 700px){
