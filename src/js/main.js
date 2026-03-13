@@ -138,7 +138,7 @@ async function searchGolfClubs(lat, lng) {
 
         // 3. fallback om inget hittas
         } else {
-            name = "Okänt namn - Bangolf";
+            name = "Okänt namn";
         }
 
         return {
