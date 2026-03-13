@@ -6,13 +6,18 @@ $color-background: #FFFDF7;
 $color-background-light: #FFFFFF;
 
 $color-font: #2B2B2B;
+$color-font-grey: #757575;
 $color-font-light: #FFFFFF;
 
 $color-primary:#A54657;
 $color-secondary:#D27F90;
+$color-secondary-dark: #582630;
 
 $color-error: #F26157;
 $color-border: #E6E0DA;
+
+// Borders Size
+$size-border: 5px;
 
 *{
     margin: 0;
