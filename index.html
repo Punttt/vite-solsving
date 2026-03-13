@@ -6,11 +6,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Solsving</title>
     <link rel="stylesheet" href="/src/scss/main.scss">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   </head>
   <body>
     <header>
-      <div class="container"></div>
+      <div class="container">
+        <a href="/">
+          <h1><img src="/images/logotypes/logotype.png" class="logo" alt="Solsving"></h1>
+        </a>
+      </div>
     </header>
+    <main>
+      <div class="container">
+        <div class="intro">
+          <div class="card">
+            <p class="intro-text">
+              Sök efter en stad för att se väder och äventyrsgolf nära dig.
+            </p>
+          </div>
+        </div>
+
+        <form id="locationForm" class="search-form">
+          <input type="text" id="locationInput" placeholder="Vart vill du spela?" required>
+          <button type="submit" class="btn">Sök</button>
+        </form>
+
+        <div class="spinner hidden" id="loader"></div>
+
+        <!-- Rendering av väderprognosen -->
+        <section class="card--weather" id="forecast"></section>
+
+        <!-- Rendering av klubbar-->
+        <section class="courses-wrapper" id="course-box"></section>
+      </div>
+    </main>
+    <footer>
+      <div class="container">
+        <p>&copy; Pojodev</p>
+      </div>
+    </footer>
     <script type="module" src="/src/js/main.js"></script>
   </body>
 </html>

@@ -1,0 +1,204 @@
+"use strict"
+
+/**
+ * Inväntar DOM att bli färdigladdat
+ */
+document.addEventListener("DOMContentLoaded", ()=>{
+    const form = document.getElementById("locationForm");
+    const input = document.getElementById("locationInput");
+
+    form.addEventListener("submit",async (e)=>{
+        e.preventDefault();
+
+        // Gömma introrutan
+        document.querySelector(".intro").classList.add("hidden");
+        document.querySelector("#loader").classList.remove("hidden");
+
+        const query = input.value;
+
+        // Anropar funktion för att hämta koordinater för plats placerar i coords.lat / coords.lng
+        const coords = await searchLocation(query);
+
+        // Anropar funktion för att få uppgifter för väderprognosen
+        const forecast = await searchWeather(coords.lat, coords.lng);
+
+        // Render weather
+        renderWeather(forecast);
+
+        // Anropar funktion för att få uppgifter om golfbanor
+        const clubs = await searchGolfClubs(coords.lat, coords.lng);    
+
+        // Renderar klubbarna
+        renderClubs(clubs);
+        document.querySelector("#loader").classList.add("hidden");
+    })
+})
+
+
+/**
+ * Hämtar koordinater från Google Geocoding API baserat på en söksträng.
+ * 
+ * @async
+ * @param {string} query - Platsen som användaren söker efter.
+ * @returns {Promise<{lat: number, lng: number} | null>}
+ * Returnerar ett objekt med latitud och longitud, eller null om platsen inte hittas
+ */
+async function searchLocation(query) {
+    const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(query)}&key=AIzaSyC4Gx-KoIj3bIpmEd9Q9AkETl8ZJxRVzAI`;
+    let data;
+
+    try{
+        const response = await fetch(url);
+        data = await response.json();
+
+        if(data.status != "OK"){
+            console.error(data.error_message);
+            return null;
+        }
+
+        const lat = data.results[0].geometry.location.lat;
+        const lng = data.results[0].geometry.location.lng;
+
+        return {lat , lng};
+
+    }catch (error){
+        console.error(error);
+        return null;
+    }
+}
+
+
+// funktionen för att hämta vädret
+// behöver noteras
+async function searchWeather(lat, lng) {
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}&daily=weathercode,temperature_2m_max,temperature_2m_min&timezone=auto`;
+    let data;
+
+    try{
+        const response = await fetch(url);
+        data = await response.json();
+
+        const daily = data.daily;
+
+        // konvertera - datumstamp till dagnamn
+        daily.time = daily.time.map(dateString =>{
+            const date = new Date(dateString);
+            return date.toLocaleDateString("sv-SE", { weekday: "long" });
+        })
+
+        // konvertera - weathercode till kod för ikon
+        daily.weathercode = daily.weathercode.map(code =>{
+            if( code === 0 ) return `<i class="fa-solid fa-sun"></i>`; // Soligt
+            if( code === 1 || code === 2 || code === 3 ) return `<i class="fa-solid fa-cloud-sun"></i>`; // molnigt / soligt
+            if( code === 45 || code === 48 ) return `<i class="fa-solid fa-cloud"></i>`; // Molnigt
+            if( 
+                code === 51 || code === 53 || code === 55 || code === 56 || code === 57 ||
+                code === 61 || code === 63 || code === 65 || code === 66 || code === 67 ||
+                code === 80 || code === 81 || code === 82
+            ) return `<i class="fa-solid fa-cloud-showers-heavy"></i>`; // regnigt
+            if( 
+                code === 71 || code === 73 || code === 75 || code === 77 || code === 85 ||
+                code === 86
+            ) return `<i class="fa-solid fa-snowflake"></i>`; // Snö
+            if( code === 95 || code === 96 || code === 99 ) return `<i class="fa-solid fa-bolt-lightning"></i>`; // Blixtar
+
+        })
+
+        return data.daily;
+
+    }catch (error){
+        console.error(error);
+        return null;
+    }
+}
+
+// funktion för att söka golfklubbar
+async function searchGolfClubs(lat, lng) {
+
+    const apiKey = "4df938918ee847b3a2727c8763b763ba";
+
+    const url = `https://api.geoapify.com/v2/places?categories=entertainment.miniature_golf&filter=circle:${lng},${lat},10000&limit=10&apiKey=${apiKey}`;
+
+    const response = await fetch(url);
+    const data = await response.json();
+
+    console.log(url);
+
+    const results = data.features.map(f => {
+
+        let name;
+
+        // 1. Om riktigt namn finns
+        if (f.properties.name) {
+            name = f.properties.name;
+
+        // 2. Om namn saknas men suburb finns
+        } else if (f.properties.suburb) {
+            name = `${f.properties.suburb} - Bangolf`;
+
+        // 3. fallback om inget hittas
+        } else {
+            name = "Okänt namn";
+        }
+
+        return {
+            name: name,
+            address: f.properties.formatted,
+            lat: f.properties.lat,
+            lon: f.properties.lon
+        };
+    });
+
+
+    return results;
+}
+
+
+// renderar weather
+function renderWeather(forecast) {
+    const forecastEl = document.getElementById("forecast");
+    forecastEl.innerHTML = "";
+
+    // Animation för render (fade-in)
+    forecastEl.classList.remove("fade-in");
+    void forecastEl.offsetWidth;
+    forecastEl.classList.add("fade-in");
+
+    for(let i = 0; i < 7; i++){
+
+        
+        forecastEl.innerHTML += `
+           <div class="day-card">
+                <h3>${forecast.time[i]}</h3>
+                ${forecast.weathercode[i]}
+                <p><span class="deg-max">${forecast.temperature_2m_max[i]}&deg;</span> <span class="deg-min">${forecast.temperature_2m_min[i]}&deg;</span></p>
+            </div>     
+        `;
+    }
+    
+}
+
+// render clubs
+function renderClubs(clubs){
+    const coursesEl = document.getElementById("course-box");
+    coursesEl.innerHTML = "";
+
+    // Animation för render (fade-in)
+    coursesEl.classList.remove("fade-in");
+    void coursesEl.offsetWidth;
+    coursesEl.classList.add("fade-in");
+
+    clubs.forEach(club =>{
+        const mapUrl = `https://www.google.com/maps/search/?api=1&query=${club.lat},${club.lon}`;
+
+        coursesEl.innerHTML += `
+            <div class="card course">
+                <div class="course_info">
+                    <h3>${club.name}</h3>
+                    <p>${club.address}</p>
+                </div>
+                <a href="${mapUrl}" target="_blank" class="btn">Hitta hit</a>
+            </div>  
+        `;
+    })
+}
