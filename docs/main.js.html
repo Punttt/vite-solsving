@@ -1,4 +1,32 @@
-"use strict"
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: main.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: main.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>"use strict"
 
 /**
  * Startar applikationen när DOM:en är färdigladdad
@@ -46,11 +74,11 @@ document.addEventListener("DOMContentLoaded", ()=>{
  * 
  * @async
  * @param {string} query - Platsen som användaren söker efter.
- * @returns {Promise<{lat: number, lng: number} | null>}
+ * @returns {Promise&lt;{lat: number, lng: number} | null>}
  * Returnerar ett objekt med latitud och longitud, eller null om platsen inte hittas
  */
 async function searchLocation(query) {
-    const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(query)}&key=AIzaSyC4Gx-KoIj3bIpmEd9Q9AkETl8ZJxRVzAI`;
+    const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(query)}&amp;key=AIzaSyC4Gx-KoIj3bIpmEd9Q9AkETl8ZJxRVzAI`;
     let data;
 
     try{
@@ -81,11 +109,11 @@ async function searchLocation(query) {
  * @function
  * @param {number} lat 
  * @param {number} lng 
- * @returns {Promise<{time: string[], weathercode: string[], temperature_2m_max: number[], temperature_2m_min: number[]}> | null}
+ * @returns {Promise&lt;{time: string[], weathercode: string[], temperature_2m_max: number[], temperature_2m_min: number[]}> | null}
  * Returnerar ett objekt med väderdata för 7 dagar, eller null om API-anropet misslyckas
  */
 async function searchWeather(lat, lng) {
-    const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}&daily=weathercode,temperature_2m_max,temperature_2m_min&timezone=auto`;
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&amp;longitude=${lng}&amp;daily=weathercode,temperature_2m_max,temperature_2m_min&amp;timezone=auto`;
     let data;
 
     try{
@@ -102,19 +130,19 @@ async function searchWeather(lat, lng) {
 
         // konvertera - weathercode till kod för ikon
         daily.weathercode = daily.weathercode.map(code =>{
-            if( code === 0 ) return `<i class="fa-solid fa-sun"></i>`; // Soligt
-            if( code === 1 || code === 2 || code === 3 ) return `<i class="fa-solid fa-cloud-sun"></i>`; // molnigt / soligt
-            if( code === 45 || code === 48 ) return `<i class="fa-solid fa-cloud"></i>`; // Molnigt
+            if( code === 0 ) return `&lt;i class="fa-solid fa-sun">&lt;/i>`; // Soligt
+            if( code === 1 || code === 2 || code === 3 ) return `&lt;i class="fa-solid fa-cloud-sun">&lt;/i>`; // molnigt / soligt
+            if( code === 45 || code === 48 ) return `&lt;i class="fa-solid fa-cloud">&lt;/i>`; // Molnigt
             if( 
                 code === 51 || code === 53 || code === 55 || code === 56 || code === 57 ||
                 code === 61 || code === 63 || code === 65 || code === 66 || code === 67 ||
                 code === 80 || code === 81 || code === 82
-            ) return `<i class="fa-solid fa-cloud-showers-heavy"></i>`; // regnigt
+            ) return `&lt;i class="fa-solid fa-cloud-showers-heavy">&lt;/i>`; // regnigt
             if( 
                 code === 71 || code === 73 || code === 75 || code === 77 || code === 85 ||
                 code === 86
-            ) return `<i class="fa-solid fa-snowflake"></i>`; // Snö
-            if( code === 95 || code === 96 || code === 99 ) return `<i class="fa-solid fa-bolt-lightning"></i>`; // Blixtar
+            ) return `&lt;i class="fa-solid fa-snowflake">&lt;/i>`; // Snö
+            if( code === 95 || code === 96 || code === 99 ) return `&lt;i class="fa-solid fa-bolt-lightning">&lt;/i>`; // Blixtar
 
         })
 
@@ -133,14 +161,14 @@ async function searchWeather(lat, lng) {
  * @function
  * @param {number} lat 
  * @param {number} lng 
- * @returns {Promise<Array<{name: string, address: string, lat: number, lon: number}>>}
+ * @returns {Promise&lt;Array&lt;{name: string, address: string, lat: number, lon: number}>>}
  * Returnerar en array med objekt som presenterar golfbanor med Namn, adress och koordinater
  */
 async function searchGolfClubs(lat, lng) {
 
     const apiKey = "4df938918ee847b3a2727c8763b763ba";
 
-    const url = `https://api.geoapify.com/v2/places?categories=entertainment.miniature_golf&filter=circle:${lng},${lat},10000&limit=10&apiKey=${apiKey}`;
+    const url = `https://api.geoapify.com/v2/places?categories=entertainment.miniature_golf&amp;filter=circle:${lng},${lat},10000&amp;limit=10&amp;apiKey=${apiKey}`;
 
     const response = await fetch(url);
     const data = await response.json();
@@ -197,15 +225,15 @@ function renderWeather(forecast) {
     void forecastEl.offsetWidth;
     forecastEl.classList.add("fade-in");
 
-    for(let i = 0; i < 7; i++){
+    for(let i = 0; i &lt; 7; i++){
 
         
         forecastEl.innerHTML += `
-           <div class="day-card">
-                <h3>${forecast.time[i]}</h3>
+           &lt;div class="day-card">
+                &lt;h3>${forecast.time[i]}&lt;/h3>
                 ${forecast.weathercode[i]}
-                <p><span class="deg-max">${forecast.temperature_2m_max[i]}&deg;</span> <span class="deg-min">${forecast.temperature_2m_min[i]}&deg;</span></p>
-            </div>     
+                &lt;p>&lt;span class="deg-max">${forecast.temperature_2m_max[i]}&amp;deg;&lt;/span> &lt;span class="deg-min">${forecast.temperature_2m_min[i]}&amp;deg;&lt;/span>&lt;/p>
+            &lt;/div>     
         `;
     }
     
@@ -219,7 +247,7 @@ function renderWeather(forecast) {
  * Namn, adress och en knapp som leder till Google maps baserat på klubbens koordinater.
  * 
  * @function
- * @param {Array<{name: string, address: string, lat: number, lon: number}>} clubs
+ * @param {Array&lt;{name: string, address: string, lat: number, lon: number}>} clubs
  * En arrat med ovjekt som representerar minigolfklubbar
  * @returns {void}
  */
@@ -233,16 +261,38 @@ function renderClubs(clubs){
     coursesEl.classList.add("fade-in");
 
     clubs.forEach(club =>{
-        const mapUrl = `https://www.google.com/maps/search/?api=1&query=${club.lat},${club.lon}`;
+        const mapUrl = `https://www.google.com/maps/search/?api=1&amp;query=${club.lat},${club.lon}`;
 
         coursesEl.innerHTML += `
-            <div class="card course">
-                <div class="course_info">
-                    <h3>${club.name}</h3>
-                    <p>${club.address}</p>
-                </div>
-                <a href="${mapUrl}" target="_blank" class="btn">Hitta hit</a>
-            </div>  
+            &lt;div class="card course">
+                &lt;div class="course_info">
+                    &lt;h3>${club.name}&lt;/h3>
+                    &lt;p>${club.address}&lt;/p>
+                &lt;/div>
+                &lt;a href="${mapUrl}" target="_blank" class="btn">Hitta hit&lt;/a>
+            &lt;/div>  
         `;
     })
-}
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Events</h3><ul><li><a href="global.html#event:DOMContentLoaded">DOMContentLoaded</a></li></ul><h3>Global</h3><ul><li><a href="global.html#renderClubs">renderClubs</a></li><li><a href="global.html#renderWeather">renderWeather</a></li><li><a href="global.html#searchGolfClubs">searchGolfClubs</a></li><li><a href="global.html#searchLocation">searchLocation</a></li><li><a href="global.html#searchWeather">searchWeather</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Fri Mar 13 2026 11:01:31 GMT+0100 (centraleuropeisk normaltid)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
